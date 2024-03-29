@@ -1,0 +1,14 @@
+inputSet:
+  name: Build_CIsamples_developer_hub_1711726644079-pr-trigger-input-set
+  identifier: Build_CIsamples_developer_hub_1711726644079prtriggerinputset
+  orgIdentifier: default
+  projectIdentifier: Nofar
+  pipeline:
+    identifier: Build_CIsamples_developer_hub_1711726644079
+    properties:
+      ci:
+        codebase:
+          build:
+            type: PR
+            spec:
+              number: <+trigger.prNumber>
