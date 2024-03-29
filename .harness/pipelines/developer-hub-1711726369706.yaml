@@ -1,0 +1,60 @@
+pipeline:
+  identifier: Build_CIsamples_developer_hub_1711726644079
+  name: Build developer-hub
+  orgIdentifier: default
+  projectIdentifier: Nofar
+  properties:
+    ci:
+      codebase:
+        build: <+input>
+        connectorRef: Nofar_Github
+        repoName: CIsamples/developer-hub
+  stages:
+    - stage:
+        identifier: build1
+        name: build
+        spec:
+          caching:
+            enabled: true
+          cloneCodebase: true
+          execution:
+            steps:
+              - step:
+                  identifier: installdependencies
+                  name: install dependencies
+                  spec:
+                    command: npm install
+                  timeout: ""
+                  type: Run
+              - step:
+                  identifier: test
+                  name: test
+                  spec:
+                    command: npm run test
+                  timeout: ""
+                  type: Run
+              - step:
+                  identifier: build
+                  name: build
+                  spec:
+                    command: npm run build
+                  timeout: ""
+                  type: Run
+              - step:
+                  identifier: dockerbuild
+                  name: docker_build
+                  spec:
+                    caching: true
+                    connectorRef: <+input>
+                    repo: hello/world
+                    tags:
+                      - latest
+                  timeout: ""
+                  type: BuildAndPushDockerRegistry
+          platform:
+            arch: Amd64
+            os: Linux
+          runtime:
+            spec: {}
+            type: Cloud
+        type: CI
